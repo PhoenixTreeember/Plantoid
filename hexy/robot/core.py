@@ -9,13 +9,13 @@ from time import sleep
 
 joint_properties = {
 
-    'RFH': (0, 248, 398), 'RFK': (1, 188, 476), 'RFA': (2, 131, 600),
-    'RMH': (3, 275, 425), 'RMK': (4, 227, 507), 'RMA': (5, 160, 625),
-    'RBH': (6, 312, 457), 'RBK': (7, 251, 531), 'RBA': (8, 138, 598),
-    'LFH': (9, 240, 390), 'LFK': (10, 230, 514), 'LFA': (11, 150, 620),
-    'LMH': (12, 315, 465), 'LMK': (13, 166, 466), 'LMA': (14, 140, 620),
-    'LBH': (15, 320, 480), 'LBK': (16, 209, 499), 'LBA': (17, 150, 676),
-    'RN': (18, 150, 650)
+    'RFH': (6, 248, 398, 'dr1'), 'RFK': (7, 188, 476, 'dr1'), 'RFA': (8, 131, 600, 'dr1'),
+    'RMH': (6, 275, 425), 'RMK': (7, 227, 507), 'RMA': (8, 160, 625),
+    'RBH': (3, 312, 457), 'RBK': (4, 251, 531), 'RBA': (5, 138, 598),
+    'LFH': (3, 240, 390, 'dr1'), 'LFK': (4, 230, 514, 'dr1'), 'LFA': (5, 150, 620, 'dr1'),
+    'LMH': (0, 315, 465, 'dr1'), 'LMK': (1, 166, 466, 'dr1'), 'LMA': (2, 140, 620, 'dr1'),
+    'LBH': (0, 320, 480), 'LBK': (1, 209, 499), 'LBA': (2, 150, 676),
+    'N': (9, 150, 650, 'dr1')
 }
 
 driver1 = PWM(0x40)
@@ -26,7 +26,7 @@ driver2.setPWMFreq(60)
 
 
 def drive(ch, val):
-    driver = driver1 if key.startswith('R') else driver2
+    driver = driver1 if joint_properties.has_key('dr1') else driver2
     driver.setPWM(ch, 0, val)
 
 
