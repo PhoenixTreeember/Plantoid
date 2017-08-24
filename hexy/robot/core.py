@@ -18,8 +18,8 @@ joint_properties = {
     'N': (9, 150, 650)
 }
 
-driver1 = PWM(0x40)
-driver2 = PWM(0x41)
+driver1 = PWM(0x41)
+driver2 = PWM(0x40)
 
 driver1.setPWMFreq(60)
 driver2.setPWMFreq(60)
