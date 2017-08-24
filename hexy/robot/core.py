@@ -9,13 +9,13 @@ from time import sleep
 
 joint_properties = {
 
-    'RFH': (6, 248, 398, 'dr1'), 'RFK': (7, 188, 476, 'dr1'), 'RFA': (8, 131, 600, 'dr1'),
+    'RFH': (6, 248, 398), 'RFK': (7, 188, 476), 'RFA': (8, 131, 600),
     'RMH': (6, 275, 425), 'RMK': (7, 227, 507), 'RMA': (8, 160, 625),
     'RBH': (3, 312, 457), 'RBK': (4, 251, 531), 'RBA': (5, 138, 598),
-    'LFH': (3, 240, 390, 'dr1'), 'LFK': (4, 230, 514, 'dr1'), 'LFA': (5, 150, 620, 'dr1'),
-    'LMH': (0, 315, 465, 'dr1'), 'LMK': (1, 166, 466, 'dr1'), 'LMA': (2, 140, 620, 'dr1'),
+    'LFH': (3, 240, 390), 'LFK': (4, 230, 514), 'LFA': (5, 150, 620),
+    'LMH': (0, 315, 465), 'LMK': (1, 166, 466), 'LMA': (2, 140, 620),
     'LBH': (0, 320, 480), 'LBK': (1, 209, 499), 'LBA': (2, 150, 676),
-    'N': (9, 150, 650, 'dr1')
+    'N': (9, 150, 650)
 }
 
 driver1 = PWM(0x40)
@@ -26,7 +26,7 @@ driver2.setPWMFreq(60)
 
 
 def drive(ch, val):
-    driver = driver1 if joint_properties.has_key('dr1') else driver2
+    driver = driver1 if 'RFH' or 'RFK' or 'RFA' or 'LFH' or 'LFK' or 'LFA' or 'LMH' or 'LMK' or 'LMA' or 'N' in joint_properties else driver2
     driver.setPWM(ch, 0, val)
 
 
@@ -128,7 +128,7 @@ class Joint:
     def __init__(self, joint_type, jkey, maxx = 90, leeway = 0):
 
         self.joint_type, self.name =  joint_type, jkey
-        self.channel, self.min_pulse, self.max_pulse, self.driver = joint_properties[jkey]
+        self.channel, self.min_pulse, self.max_pulse = joint_properties[jkey]
         self.max, self.leeway = maxx, leeway
 
         self.off()
