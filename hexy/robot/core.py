@@ -128,7 +128,7 @@ class Joint:
     def __init__(self, joint_type, jkey, maxx = 90, leeway = 0):
 
         self.joint_type, self.name =  joint_type, jkey
-        self.channel, self.min_pulse, self.max_pulse = joint_properties[jkey]
+        self.channel, self.min_pulse, self.max_pulse, self.driver = joint_properties[jkey]
         self.max, self.leeway = maxx, leeway
 
         self.off()
