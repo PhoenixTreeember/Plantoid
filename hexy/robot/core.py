@@ -26,7 +26,10 @@ driver2.setPWMFreq(60)
 
 
 def drive(ch, val):
-    driver = driver1 if 'RFH' or 'RFK' or 'RFA' or 'LFH' or 'LFK' or 'LFA' or 'LMH' or 'LMK' or 'LMA' or 'N' in joint_properties else driver2
+    driver1_list = ['RFH', 'RFK', 'RFA', 'LFH', 'LFK', 'LFA', 'LMH', 'LMK', 'LMA', 'N']
+    for i in driver1_list:
+        driver = driver1
+        else driver2
     driver.setPWM(ch, 0, val)
 
 
