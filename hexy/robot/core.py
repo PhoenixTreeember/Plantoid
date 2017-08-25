@@ -5,17 +5,17 @@ from time import sleep
     R - right, L - left
     F - front, M - middle, B - back
     H - hip, K - knee, A - Ankle
-    key : (channel, minimum_pulse_length, maximum_pulse_length) """
+    key : (channel, minimum_pulse_length, maximum_pulse_length, direction) """
 
 joint_properties = {
 
-    'RFH': (6, 135, 405), 'RFK': (7, 260, 645), 'RFA': (8, 260, 630),
-    'RMH': (6, 140, 470), 'RMK': (7, 340, 670), 'RMA': (8, 290, 680),
-    'RBH': (3, 150, 490), 'RBK': (4, 300, 670), 'RBA': (5, 300, 670),
-    'LFH': (3, 155, 420), 'LFK': (4, 275, 630), 'LFA': (5, 220, 650),
-    'LMH': (0, 175, 415), 'LMK': (1, 310, 600), 'LMA': (2, 250, 650),
-    'LBH': (0, 150, 500), 'LBK': (1, 330, 690), 'LBA': (2, 290, 680),
-    'N': (9, 170, 620)
+    'RFH': (6, 135, 405, -1), 'RFK': (7, 260, 645, 1), 'RFA': (8, 260, 630, 1),
+    'RMH': (6, 140, 470, 1), 'RMK': (7, 340, 670, 1), 'RMA': (8, 290, 680, 1), #uncalibrated
+    'RBH': (3, 150, 490, 1), 'RBK': (4, 300, 670, 1), 'RBA': (5, 300, 670, 1), #uncalibrated
+    'LFH': (3, 155, 420, -1), 'LFK': (4, 275, 630, 1), 'LFA': (5, 220, 650, 1),
+    'LMH': (0, 175, 415, -1), 'LMK': (1, 310, 600, 1), 'LMA': (2, 250, 650, 1),
+    'LBH': (0, 150, 500, 1), 'LBK': (1, 330, 690, 1), 'LBA': (2, 290, 680, 1), #uncalibrated
+    'N': (9, 170, 620, -1)
 }
 
 driver1 = PWM(0x41)
@@ -128,7 +128,7 @@ class Joint:
     def __init__(self, joint_type, jkey, maxx = 90, leeway = 0):
 
         self.joint_type, self.name =  joint_type, jkey
-        self.channel, self.min_pulse, self.max_pulse = joint_properties[jkey]
+        self.channel, self.min_pulse, self.max_pulse, self.direction = joint_properties[jkey]
         self.max, self.leeway = maxx, leeway
 
         self.off()
@@ -136,7 +136,7 @@ class Joint:
     def pose(self, angle = 0):
 
         angle = constrain(angle, -(self.max + self.leeway), self.max + self.leeway)
-        pulse = remap(angle, (-self.max, self.max), (self.min_pulse, self.max_pulse))
+        pulse = remap((angle * self.direction), (-self.max, self.max), (self.min_pulse, self.max_pulse))
 
         drive(self.channel, pulse)
         self.angle = angle
