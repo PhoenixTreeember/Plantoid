@@ -28,9 +28,7 @@ driver2.setPWMFreq(60)
 
 
 def drive(ch, val):
-    for i in driver1_list:
-        driver = driver1
-        else driver2
+    driver = driver1 if i in driver1_list else driver2
     driver.setPWM(ch, 0, val)
 
 
