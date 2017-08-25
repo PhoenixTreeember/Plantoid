@@ -18,7 +18,7 @@ joint_properties = {
     'N': (9, 170, 620, -1)
 }
 
-driver1_list = ['RFH', 'RFK', 'RFA', 'LFH', 'LFK', 'LFA', 'LMH', 'LMK', 'LMA', 'N']
+driver1_legs = ['RFH', 'RFK', 'RFA', 'LFH', 'LFK', 'LFA', 'LMH', 'LMK', 'LMA', 'N']
 
 driver1 = PWM(0x41)
 driver2 = PWM(0x40)
@@ -27,9 +27,9 @@ driver1.setPWMFreq(60)
 driver2.setPWMFreq(60)
 
 
-def drive(ch, val):
-    driver = driver1 if i in driver1_list else driver2
-    driver.setPWM(ch, 0, val)
+drive(ch, name, pulse):
+  driver = driver1 if name in driver1_legs else driver2
+  driver.setPWM(ch, 0, pulse)
 
 
 def constrain(val, min_val, max_val):
@@ -140,13 +140,13 @@ class Joint:
         angle = constrain(angle, -(self.max + self.leeway), self.max + self.leeway)
         pulse = remap((angle * self.direction), (-self.max, self.max), (self.min_pulse, self.max_pulse))
 
-        drive(self.channel, pulse)
+        drive(self.channel, self.name, pulse)
         self.angle = angle
         
         #print repr(self), ':', 'pulse', pulse
 
     def off(self):
-        drive(self.channel, 0)
+        drive(self.channel, self.name, 0)
         self.angle = None
 
     def __repr__(self):
