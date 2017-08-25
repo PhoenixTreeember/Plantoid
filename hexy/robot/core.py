@@ -27,9 +27,9 @@ driver1.setPWMFreq(60)
 driver2.setPWMFreq(60)
 
 
-def drive(ch, name, pulse):
+def drive(ch, name, val):
   driver = driver1 if name in driver1_legs else driver2
-  driver.setPWM(ch, 0, pulse)
+  driver.setPWM(ch, 0, val)
 
 
 def constrain(val, min_val, max_val):
