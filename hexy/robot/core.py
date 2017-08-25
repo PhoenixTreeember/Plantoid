@@ -27,7 +27,7 @@ driver1.setPWMFreq(60)
 driver2.setPWMFreq(60)
 
 
-drive(ch, name, pulse):
+def drive(ch, name, pulse):
   driver = driver1 if name in driver1_legs else driver2
   driver.setPWM(ch, 0, pulse)
 
