@@ -18,7 +18,10 @@ joint_properties = {
     'N': (9, 170, 620, -1)
 }
 
-driver1_legs = ['RFH', 'RFK', 'RFA', 'LFH', 'LFK', 'LFA', 'LMH', 'LMK', 'LMA', 'N']
+driver1_legs = ['RFH', 'RFK', 'RFA', 
+                'LFH', 'LFK', 'LFA', 
+                'LMH', 'LMK', 'LMA', 
+                'N']
 
 driver1 = PWM(0x41)
 driver2 = PWM(0x40)
@@ -27,9 +30,9 @@ driver1.setPWMFreq(60)
 driver2.setPWMFreq(60)
 
 
-def drive(ch, name, val):
+def drive(ch, name, pulse):
   driver = driver1 if name in driver1_legs else driver2
-  driver.setPWM(ch, 0, val)
+  driver.setPWM(ch, 0, pulse)
 
 
 def constrain(val, min_val, max_val):
