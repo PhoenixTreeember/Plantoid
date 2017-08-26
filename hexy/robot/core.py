@@ -48,7 +48,7 @@ class HexapodCore:
 
     def __init__(self):
 
-        self.neck = Joint("neck", 'N')
+        self.neck = Joint("neck", ’N’, ‘-90, 90)
 
         self.left_front = Leg('left front', 'LFH', 'LFK', 'LFA')
         self.right_front = Leg('right front', 'RFH', 'RFK', 'RFA')
