@@ -43,7 +43,7 @@ def remap(old_val, (old_min, old_max), (new_min, new_max)):
     new_diff = (new_max - new_min)*(old_val - old_min) / float((old_max - old_min))
     return int(round(new_diff)) + new_min 
 
-
+                 
 class HexapodCore:
 
     def __init__(self):
@@ -88,11 +88,12 @@ class Leg:
 
     def __init__(self, name, hip_key, knee_key, ankle_key):
 
-        max_hip, max_knee, knee_leeway = 45, 50, 10
+        max_hip, max_knee, max_ankle = 45, 50, 90
+        min_hip, min_knee, min_ankle = -45, -20, 0
         
-        self.hip = Joint("hip", hip_key, max_hip)
-        self.knee = Joint("knee", knee_key, max_knee, leeway = knee_leeway)
-        self.ankle = Joint("ankle", ankle_key)
+        self.hip = Joint("hip", hip_key, max_hip, min_hip)
+        self.knee = Joint("knee", knee_key, max_knee, min_knee)
+        self.ankle = Joint("ankle", ankle_key, max_knee, min_knee)
 
         self.name = name
         self.joints = [self.hip, self.knee, self.ankle]
@@ -130,23 +131,23 @@ class Leg:
 
 class Joint:
 
-    def __init__(self, joint_type, jkey, maxx = 90, leeway = 0):
+    def __init__(self, joint_type, jkey, mx, mn):
 
         self.joint_type, self.name =  joint_type, jkey
         self.channel, self.min_pulse, self.max_pulse, self.direction = joint_properties[jkey]
-        self.max, self.leeway = maxx, leeway
+        self.min, self.max = mn, mx
 
         self.off()
 
     def pose(self, angle = 0):
 
-        angle = constrain(angle, -(self.max + self.leeway), self.max + self.leeway)
-        pulse = remap((angle * self.direction), (-self.max, self.max), (self.min_pulse, self.max_pulse))
-
+        angle = constrain(angle, self.min, self.max)
+        pulse = remap((angle * self.direction), (-90, 90), (self.min_pulse, self.max_pulse))
+        
         drive(self.channel, self.name, pulse)
         self.angle = angle
         
-        #print repr(self), ':', 'pulse', pulse
+        print repr(self), ':', 'pulse', pulse
 
     def off(self):
         drive(self.channel, self.name, 0)
@@ -154,4 +155,3 @@ class Joint:
 
     def __repr__(self):
         return 'joint: ' + self.joint_type + ' : ' + self.name + ' angle: ' + str(self.angle)
- 
