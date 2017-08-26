@@ -111,7 +111,7 @@ class Leg:
         if knee_angle == None: knee_angle = self.knee.angle
         if hip_angle == None: hip_angle = self.hip.angle
 
-        self.pose(hip_angle, knee_angle, offset - knee_angle)
+        self.pose(hip_angle, knee_angle, knee_angle - offset)
 
     def replant(self, raised, floor, offset, t = 0.1):
 
