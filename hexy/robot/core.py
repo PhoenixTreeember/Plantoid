@@ -93,7 +93,7 @@ class Leg:
         
         self.hip = Joint("hip", hip_key, max_hip, min_hip)
         self.knee = Joint("knee", knee_key, max_knee, min_knee)
-        self.ankle = Joint("ankle", ankle_key, max_knee, min_knee)
+        self.ankle = Joint("ankle", ankle_key, max_ankle, min_ankle)
 
         self.name = name
         self.joints = [self.hip, self.knee, self.ankle]
