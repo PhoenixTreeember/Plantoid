@@ -88,8 +88,8 @@ class Leg:
 
     def __init__(self, name, hip_key, knee_key, ankle_key):
 
-        max_hip, max_knee, max_ankle = 30, 150, 90
-        min_hip, min_knee, min_ankle = -30, -75, -90
+        max_hip, max_knee, max_ankle = 30, 90, 90
+        min_hip, min_knee, min_ankle = -30, -70, -90
         
         self.hip = Joint("hip", hip_key, max_hip, min_hip)
         self.knee = Joint("knee", knee_key, max_knee, min_knee)
