@@ -7,7 +7,6 @@
 from hexy.robot.core import *
 import time
 import Adafruit_ADS1x15
-from random import randint
 
 
 GAIN = 16 # +/-0.256V
